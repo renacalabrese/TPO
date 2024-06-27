@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #F1EFE7;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-name {
+            font-weight: bold;
+        }
+
+        .product-description {
+            color: #555555;
+            font-size: 14px;
+        }
+
+        .product-price {
+            color: #4c8640;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .add-to-cart-button {
+            background-color: #4c8640;
+            color: #F1EFE7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #4c8640;
+            font-weight: bold;
+            background-color: transparent;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .button:last-child {
+            margin-right: 0;
+        }
+
+        .button:hover {
+            background-color: #4c8640;
+            color: #F1EFE7;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Productos</h1>
+<ul>
+    <!-- Iterar sobre los productos disponibles -->
+    <li th:each="product : ${products}">
+        <div class="product-info">
+            <!-- Mostrar el nombre, precio y descripción del producto -->
+            <span class="product-name" th:text="${product.name}">Nombre del Producto</span>
+            <span class="product-description" th:text="${product.description}">Descripción del Producto</span>
+            <span class="product-price" th:text="'$' + ${product.price}">Precio: $0.00</span>
+        </div>
+        <!-- Formulario para agregar productos al carrito -->
+        <form method="post" action="/cart/add">
+            <!-- Campos ocultos para enviar información del producto -->
+            <input type="hidden" name="productId" th:value="${product.id}">
+            <input type="hidden" name="productName" th:value="${product.name}">
+            <input type="hidden" name="price" th:value="${product.price}">
+            <!-- Campo para seleccionar la cantidad de productos -->
+            <input class="quantity-input" type="number" name="quantity" value="1" min="1">
+            <!-- Botón para enviar el formulario -->
+            <button class="add-to-cart-button" type="submit">Agregar al carrito</button>
+        </form>
+    </li>
+</ul>
+<!-- Enlace para ver el carrito -->
+<div class="button-container">
+    <a href="/cart" class="button">Ver carrito</a>
+    <a href="/inicio" class="button">Inicio</a>
+</div>
+</body>
+</html>
