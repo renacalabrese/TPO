@@ -1,6 +1,7 @@
 package org.example.controller;
 
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.example.model.Category;
 import org.example.model.User;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/")
@@ -61,6 +63,34 @@ public class UserController {
 
             // Redirecciona al usuario a la página de login después de registrarse exitosamente
             return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        Model model,
+                        HttpSession session) {
+        if (userService.existsAccount(username, password)) {
+            session.setAttribute("username", username);
+            session.setAttribute("loginTime", LocalDateTime.now());
+            User user = userService.findUserByUsername(username);
+            String userId = user.getId();
+            String role = user.getRole();
+            session.setAttribute("userId", userId);
+            session.setAttribute("role", role);
+            /*
+            Cart cart = cartService.getOrCreateCart(userId);
+            session.setAttribute("cartId", cart.getProductId());
+            if (!user.getRole().equals(Role.ADMIN.name()) && !LocalDate.now().isEqual(user.getDayConnection())) {
+                userService.updateDayConnectio(username, LocalDate.now());
+            }
+            */
+            model.addAttribute("nombre", username);
+            return "redirect:/inicio";
+        } else {
+            model.addAttribute("error", "Usuario o contraseña invalidos");
+            return "login";
         }
     }
 
