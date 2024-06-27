@@ -79,6 +79,7 @@ public class UserController {
             String role = user.getRole();
             session.setAttribute("userId", userId);
             session.setAttribute("role", role);
+
             /*
             Cart cart = cartService.getOrCreateCart(userId);
             session.setAttribute("cartId", cart.getProductId());
@@ -86,10 +87,18 @@ public class UserController {
                 userService.updateDayConnectio(username, LocalDate.now());
             }
             */
-            model.addAttribute("nombre", username);
-            return "redirect:/inicio";
+
+            if (role.equals("ADMIN")) {
+                return "redirect:/menuHuella";
+            } else if (role.equals("USER")) {
+                // Aquí podrías realizar otras acciones si es necesario antes de redirigir a inicio
+                return "redirect:/inicio";
+            } else {
+                // Manejo para otros roles si es necesario
+                return "redirect:/defaultPage";
+            }
         } else {
-            model.addAttribute("error", "Usuario o contraseña invalidos");
+            model.addAttribute("error", "Usuario o contraseña inválidos");
             return "login";
         }
     }

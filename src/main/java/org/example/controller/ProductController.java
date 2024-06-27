@@ -2,6 +2,7 @@ package org.example.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.model.Product;
+import org.example.model.Role;
 import org.example.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

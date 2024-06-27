@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pedidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4c8640;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn.secondary {
+            background-color: #6c757d;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Pedidos</h1>
+
+    <div class="section unpaid-orders">
+        <h2>Pedidos impagos</h2>
+        <form action="#" th:action="@{/payOrders}" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>NroOrden</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Dirección</th>
+                    <th>Precio Total</th>
+                    <th>Precio con Impuestos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${unpaidOrders}">
+                    <td><input type="checkbox" name="orderIds" th:value="${order.orderId}"/></td>
+                    <td th:text="${order.orderId}"></td>
+                    <td th:text="${order.nombre}"></td>
+                    <td th:text="${order.dni}"></td>
+                    <td th:text="${order.direccion}"></td>
+                    <td th:text="${order.precioTotal}"></td>
+                    <td th:text="${order.precioConImpuestos}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn">Pagar</button>
+        </form>
+    </div>
+
+    <div class="section paid-orders">
+        <h2>Pedidos pagos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>NroOrden</th>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Dirección</th>
+                <th>Precio Total</th>
+                <th>Precio con Impuestos</th>
+                <th>Factura</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${paidOrders}">
+                <td th:text="${order.orderId}"></td>
+                <td th:text="${order.nombre}"></td>
+                <td th:text="${order.dni}"></td>
+                <td th:text="${order.direccion}"></td>
+                <td th:text="${order.precioTotal}"></td>
+                <td th:text="${order.precioConImpuestos}"></td>
+                <td>
+                    <a th:href="@{'/' + ${order.orderId}}" class="btn secondary">Ver Factura</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón para volver al inicio -->
+    <div style="text-align: center;">
+        <a th:href="@{/inicio}" class="btn">Volver al Inicio</a>
+    </div>
+</div>
+</body>
+</html>

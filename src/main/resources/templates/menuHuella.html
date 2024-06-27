@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Huella Nutritiva</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #F1EFE7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .menu-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .menu-button {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #6ab04c;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .menu-button:hover {
+            background-color: #4c8640;
+        }
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-
+<div class="menu-container">
+    <img th:src="@{/img/huellaNutritiva.png}" alt="Logo de la tienda">
+    <a href="/productos/crear" class="menu-button">Subir Producto</a>
+    <a href="/productos" class="menu-button">Ver Productos</a>
+    <a href="/logout" class="menu-button">Cerrar Sesión</a>
+</div>
 </body>
 </html>
+
