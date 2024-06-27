@@ -10,10 +10,11 @@ import java.time.LocalDate;
 @Data
 public class User {
     @Id
-    private String Id;
+    private Integer Id;
     private String userName;
     private String password;
     private String name;
+    private String surname;
     private String address;
     private String dni;
     private LocalDate dayConnection;

@@ -2,6 +2,7 @@ package org.example.controller;
 
 
 import jakarta.servlet.http.HttpSession;
+import org.example.model.Role;
 import org.springframework.ui.Model;
 import org.example.model.Category;
 import org.example.model.User;
@@ -9,6 +10,9 @@ import org.example.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import org.example.model.Cart;
+import org.example.services.CartService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CartService cartService;
 
     @GetMapping()
     public String home() {
@@ -39,6 +45,7 @@ public class UserController {
     public String register(@RequestParam String userName,
                            @RequestParam String password,
                            @RequestParam String name,
+                           @RequestParam String surname,
                            @RequestParam String address,
                            @RequestParam String dni,
                            Model model) {
@@ -52,6 +59,7 @@ public class UserController {
             user.setUserName(userName);
             user.setPassword(password);
             user.setName(name);
+            user.setSurname(surname);
             user.setAddress(address);
             user.setDni(dni);
             user.setCategory(Category.LOW); // Asigna una categoría por defecto (ejemplo: LOW)
@@ -75,17 +83,13 @@ public class UserController {
             session.setAttribute("username", username);
             session.setAttribute("loginTime", LocalDateTime.now());
             User user = userService.findUserByUsername(username);
-            String userId = user.getId();
+            Integer userId = user.getId();
             String role = user.getRole();
             session.setAttribute("userId", userId);
             session.setAttribute("role", role);
-            /*
+
             Cart cart = cartService.getOrCreateCart(userId);
             session.setAttribute("cartId", cart.getProductId());
-            if (!user.getRole().equals(Role.ADMIN.name()) && !LocalDate.now().isEqual(user.getDayConnection())) {
-                userService.updateDayConnectio(username, LocalDate.now());
-            }
-            */
             model.addAttribute("nombre", username);
             return "redirect:/inicio";
         } else {
@@ -93,7 +97,5 @@ public class UserController {
             return "login";
         }
     }
-
-
 }
 
