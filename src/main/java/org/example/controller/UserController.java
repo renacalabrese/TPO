@@ -75,7 +75,7 @@ public class UserController {
             session.setAttribute("username", username);
             session.setAttribute("loginTime", LocalDateTime.now());
             User user = userService.findUserByUsername(username);
-            String userId = user.getId();
+            Integer userId = user.getId();
             String role = user.getRole();
             session.setAttribute("userId", userId);
             session.setAttribute("role", role);
