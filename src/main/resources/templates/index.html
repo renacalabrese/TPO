@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Alimentos para Perros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F1EFE7; /* Color de fondo solicitado */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .btn-custom {
+            background-color: #6ab04c;
+            color: #F1EFE7;
+            font-weight: bold;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px; /* Espacio arriba del botón */
+        }
+        .btn-custom:hover {
+            background-color: #4c8640;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<main class="main-content">
+    <div>
+        <img th:src="@{/img/huellaNutritiva.png}" alt="Logo de la tienda">
+        <div>
+            <a th:href="@{/login}" class="btn-custom">Iniciar Sesión</a>
+            <a th:href="@{/register}" class="btn-custom">Registrarse</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>
