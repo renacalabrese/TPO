@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 @Data
 public class Product {
     @Id
-    private String ProductId;
+    private Integer ProductId;
     private String name;
     private float price;
     private String description;
